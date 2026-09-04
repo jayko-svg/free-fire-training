@@ -1,0 +1,1275 @@
+<!DOCTYPE html><html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Fire Training 2.0</title><style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#080b12;
+    color:white;
+    min-height:100vh;
+}
+
+header{
+    padding:25px 15px;
+    text-align:center;
+    background:linear-gradient(135deg,#101827,#17243a);
+    border-bottom:2px solid #263a5c;
+}
+
+header h1{
+    font-size:30px;
+}
+
+header p{
+    margin-top:8px;
+    color:#9eabc0;
+}
+
+.contenedor{
+    width:95%;
+    max-width:900px;
+    margin:20px auto;
+}
+
+.card{
+    background:#111722;
+    border:1px solid #263246;
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+}
+
+.card h2{
+    margin-bottom:15px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #35435a;
+    background:#080c14;
+    color:white;
+    font-size:16px;
+    margin-bottom:12px;
+}
+
+button{
+    border:0;
+    border-radius:10px;
+    padding:12px 15px;
+    font-weight:bold;
+    cursor:pointer;
+    color:white;
+}
+
+.boton-principal{
+    width:100%;
+    background:linear-gradient(135deg,#ff7b00,#ff3d00);
+    font-size:17px;
+}
+
+.boton{
+    background:#24344e;
+    margin-top:8px;
+}
+
+.boton:hover,
+.boton-principal:hover{
+    transform:scale(1.02);
+}
+
+.oculto{
+    display:none;
+}
+
+.perfil{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.stat{
+    background:#0b1019;
+    border-radius:12px;
+    padding:12px;
+    text-align:center;
+    border:1px solid #263246;
+}
+
+.stat strong{
+    display:block;
+    font-size:20px;
+    margin-top:5px;
+}
+
+.barra{
+    width:100%;
+    height:14px;
+    background:#080c14;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.barra-progreso{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#00c6ff,#7b2cff);
+    transition:.3s;
+}
+
+.habilidad{
+    margin-bottom:15px;
+    padding:15px;
+    background:#0b1019;
+    border-radius:12px;
+}
+
+.habilidad h3{
+    margin-bottom:10px;
+}
+
+.opciones{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.opciones button{
+    flex:1;
+    min-width:130px;
+}
+
+.rojo{
+    background:#8f2630;
+}
+
+.amarillo{
+    background:#8b711c;
+}
+
+.verde{
+    background:#207344;
+}
+
+.ejercicio{
+    padding:15px;
+    margin-top:10px;
+    background:#0b1019;
+    border-radius:12px;
+    border:1px solid #263246;
+}
+
+.ejercicio button{
+    margin-top:10px;
+    background:#273b59;
+}
+
+.completado{
+    opacity:.55;
+}
+
+.reto{
+    padding:18px;
+    background:#0b1019;
+    border-radius:15px;
+    margin-top:10px;
+}
+
+.opcion-reto{
+    width:100%;
+    margin-top:8px;
+    background:#24344e;
+    text-align:left;
+}
+
+.correcto{
+    background:#207344 !important;
+}
+
+.incorrecto{
+    background:#8f2630 !important;
+}
+
+.logro{
+    padding:12px;
+    margin-top:8px;
+    background:#0b1019;
+    border-radius:10px;
+    border:1px solid #263246;
+}
+
+.logro-bloqueado{
+    opacity:.35;
+}
+
+.rango{
+    font-size:24px;
+    font-weight:bold;
+    text-align:center;
+    padding:15px;
+}
+
+@media(max-width:650px){
+    .perfil{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    header h1{
+        font-size:24px;
+    }
+}
+</style></head><body><header>
+    <h1>🔥 FREE FIRE TRAINING 2.0</h1>
+    <p>Entrena • Mejora • Sube de rango</p>
+</header><div class="contenedor"><div class="card" id="perfilCard">
+    <h2>👤 Crear perfil</h2>
+    <input id="nombre" type="text" placeholder="Escribe tu nombre">
+    <button class="boton-principal" id="botonComenzar">
+        🚀 COMENZAR ENTRENAMIENTO
+    </button>
+</div>
+
+<div id="app" class="oculto">
+
+    <div class="card">
+        <h2>👤 Perfil</h2>
+
+        <div class="perfil">
+            <div class="stat">
+                Nombre
+                <strong id="nombreJugador">---</strong>
+            </div>
+
+            <div class="stat">
+                Nivel
+                <strong id="nivel">1</strong>
+            </div>
+
+            <div class="stat">
+                💰 Monedas
+                <strong id="monedas">0</strong>
+            </div>
+
+            <div class="stat">
+                🏆 Rango
+                <strong id="rangoJugador">🥉 Novato</strong>
+            </div>
+        </div>
+
+        <p style="margin-top:15px;">⭐ XP: <span id="xp">0</span> / <span id="xpSiguiente">100</span></p>
+
+        <div class="barra">
+            <div class="barra-progreso" id="barraXP"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📅 Entrenamiento diario</h2>
+        <p id="fechaDiario"></p>
+
+        <p style="margin-top:10px;">
+            Progreso: <span id="progresoDiario">0/4</span>
+        </p>
+
+        <div class="barra">
+            <div class="barra-progreso" id="barraDiario"></div>
+        </div>
+
+        <div id="entrenamientoDiario"></div>
+    </div>
+
+    <div class="card">
+        <h2>🎯 Diagnóstico</h2>
+        <p>Evalúa tus habilidades para descubrir qué necesitas mejorar.</p>
+
+        <div id="habilidades"></div>
+    </div>
+
+    <div class="card oculto" id="resultado">
+        <h2>📊 Resultado</h2>
+        <div id="resultadoContenido"></div>
+    </div>
+
+    <div class="card oculto" id="entrenamiento">
+        <h2>🔥 Entrenamiento personalizado</h2>
+        <div id="listaEntrenamiento"></div>
+    </div>
+
+    <div class="card">
+        <h2>🎮 Retos</h2>
+        <p>Demuestra que sabes tomar buenas decisiones.</p>
+        <div id="retos"></div>
+    </div>
+
+    <div class="card">
+        <h2>📈 Estadísticas</h2>
+
+        <div class="perfil">
+            <div class="stat">
+                🎯 Ejercicios
+                <strong id="estadisticaEjercicios">0</strong>
+            </div>
+
+            <div class="stat">
+                📅 Días
+                <strong id="estadisticaDias">0</strong>
+            </div>
+
+            <div class="stat">
+                ⭐ XP total
+                <strong id="estadisticaXP">0</strong>
+            </div>
+
+            <div class="stat">
+                💰 Monedas
+                <strong id="estadisticaMonedas">0</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🎖️ Logros</h2>
+        <div id="logros"></div>
+    </div>
+
+    <div class="card">
+        <button class="boton" id="botonReiniciar">
+            🔄 Reiniciar todo el progreso
+        </button>
+    </div>
+
+</div>
+
+</div><script>
+
+const habilidades = [
+    "Puntería",
+    "Movimiento",
+    "Rush",
+    "Decisiones",
+    "Configuración",
+    "Mentalidad"
+];
+
+const iconos = {
+    "Puntería":"🎯",
+    "Movimiento":"🏃",
+    "Rush":"🔥",
+    "Decisiones":"🧠",
+    "Configuración":"⚙️",
+    "Mentalidad":"🧘"
+};
+
+const entrenamientos = {
+
+    "Puntería":[
+        "Practica disparos a la cabeza durante 5 minutos.",
+        "Entrena arrastres rápidos hacia la cabeza.",
+        "Practica controlar el retroceso."
+    ],
+
+    "Movimiento":[
+        "Practica moverte mientras disparas.",
+        "Haz cambios rápidos de dirección.",
+        "Practica agacharte y desplazarte."
+    ],
+
+    "Rush":[
+        "Practica entrar a una pelea usando cobertura.",
+        "Entrena ataques rápidos desde los laterales.",
+        "Practica cuándo retroceder durante un rush."
+    ],
+
+    "Decisiones":[
+        "Antes de atacar, analiza la posición del enemigo.",
+        "Practica decidir cuándo pelear y cuándo retirarte.",
+        "Observa el terreno antes de avanzar."
+    ],
+
+    "Configuración":[
+        "Revisa tu HUD y coloca los botones cómodamente.",
+        "Comprueba tu sensibilidad.",
+        "Practica con tu configuración actual."
+    ],
+
+    "Mentalidad":[
+        "Mantén la calma después de perder una pelea.",
+        "Concéntrate en mejorar una habilidad a la vez.",
+        "Evita tomar decisiones apresuradas."
+    ]
+};
+
+const ejerciciosDiarios = [
+    {
+        habilidad:"Puntería",
+        icono:"🎯",
+        texto:"Practica tu precisión y tiros a la cabeza durante 5 minutos."
+    },
+    {
+        habilidad:"Movimiento",
+        icono:"🏃",
+        texto:"Practica moverte y cambiar de dirección mientras disparas."
+    },
+    {
+        habilidad:"Rush",
+        icono:"🔥",
+        texto:"Practica entrar a una pelea usando cobertura y buscando una buena posición."
+    },
+    {
+        habilidad:"Decisiones",
+        icono:"🧠",
+        texto:"Antes de atacar, observa la posición del enemigo y decide si conviene entrar."
+    }
+];
+
+const retos = [
+    {
+        pregunta:"🔥 Vas a hacer rush y el enemigo tiene mejor posición. ¿Qué haces?",
+        opciones:[
+            "Entrar directamente",
+            "Buscar cobertura y cambiar de ángulo",
+            "Quedarte quieto"
+        ],
+        correcta:1
+    },
+    {
+        pregunta:"🎯 Estás fallando muchos disparos. ¿Qué conviene hacer?",
+        opciones:[
+            "Disparar todavía más rápido",
+            "Practicar precisión y controlar los disparos",
+            "Cambiar de juego"
+        ],
+        correcta:1
+    },
+    {
+        pregunta:"🧠 Tienes poca vida y escuchas enemigos cerca. ¿Qué haces?",
+        opciones:[
+            "Entrar sin pensar",
+            "Buscar una posición segura y analizar",
+            "Correr hacia el enemigo"
+        ],
+        correcta:1
+    }
+];
+
+const logrosBase = [
+    {
+        id:"primerEjercicio",
+        nombre:"🎯 Primer entrenamiento",
+        descripcion:"Completa tu primer ejercicio."
+    },
+    {
+        id:"xp500",
+        nombre:"⚡ 500 XP",
+        descripcion:"Consigue 500 XP."
+    },
+    {
+        id:"monedas500",
+        nombre:"💰 Ahorrador",
+        descripcion:"Consigue 500 monedas."
+    },
+    {
+        id:"cincoDiarios",
+        nombre:"📅 Constante",
+        descripcion:"Completa 5 entrenamientos diarios."
+    },
+    {
+        id:"rush",
+        nombre:"🔥 Maestro del Rush",
+        descripcion:"Obtén 3 puntos en Rush."
+    },
+    {
+        id:"punteria",
+        nombre:"🎯 Buena puntería",
+        descripcion:"Obtén 3 puntos en Puntería."
+    }
+];
+
+let datos = {
+    nombre:"",
+    xp:0,
+    nivel:1,
+    monedas:0,
+    respuestas:{},
+    ejercicios:[],
+    diasCompletados:0,
+    diario:{
+        fecha:"",
+        completados:[],
+        recompensado:false
+    },
+    logros:{},
+    retosCompletados:[]
+};
+  function obtenerFecha(){
+const ahora = new Date();
+
+const año = ahora.getFullYear();
+const mes = String(ahora.getMonth()+1).padStart(2,"0");
+const dia = String(ahora.getDate()).padStart(2,"0");
+
+return `${año}-${mes}-${dia}`;
+
+}
+
+function guardar(){
+localStorage.setItem("freeFireTraining2",JSON.stringify(datos));
+}
+
+function prepararDiario(){
+
+const hoy = obtenerFecha();
+
+if(datos.diario.fecha !== hoy){
+
+    datos.diario = {
+        fecha:hoy,
+        completados:[],
+        recompensado:false
+    };
+}
+
+}
+
+function cargar(){
+
+const guardado = localStorage.getItem("freeFireTraining2");
+
+if(guardado){
+
+    try{
+        const datosGuardados = JSON.parse(guardado);
+
+        datos = {
+            ...datos,
+            ...datosGuardados,
+            diario:{
+                ...datos.diario,
+                ...(datosGuardados.diario || {})
+            }
+        };
+
+    }catch(error){
+
+        console.log("No se pudieron cargar los datos.");
+    }
+}
+
+prepararDiario();
+
+if(datos.nombre){
+
+    mostrarApp();
+}
+
+}
+
+function crearPerfil(){
+
+const nombre = document.getElementById("nombre").value.trim();
+
+if(!nombre){
+
+    alert("Escribe tu nombre primero 😭");
+    return;
+}
+
+datos.nombre = nombre;
+
+guardar();
+
+mostrarApp();
+
+}
+
+function mostrarApp(){
+
+document.getElementById("perfilCard").classList.add("oculto");
+
+document.getElementById("app").classList.remove("oculto");
+
+document.getElementById("nombreJugador").textContent = datos.nombre;
+
+mostrarFecha();
+crearEntrenamientoDiario();
+crearHabilidades();
+crearRetos();
+crearLogros();
+actualizarXP();
+actualizarEstadisticas();
+
+}
+
+function mostrarFecha(){
+
+const fecha = new Date();
+
+const opciones = {
+    weekday:"long",
+    year:"numeric",
+    month:"long",
+    day:"numeric"
+};
+
+document.getElementById("fechaDiario").textContent =
+    fecha.toLocaleDateString("es-PE",opciones);
+
+}
+
+function crearEntrenamientoDiario(){
+
+const contenedor =
+    document.getElementById("entrenamientoDiario");
+
+contenedor.innerHTML = "";
+
+ejerciciosDiarios.forEach((ejercicio,index)=>{
+
+    const div = document.createElement("div");
+
+    div.className = "ejercicio";
+
+    const completado =
+        datos.diario.completados.includes(index);
+
+    if(completado){
+        div.classList.add("completado");
+    }
+
+    div.innerHTML = `
+        <h3>${ejercicio.icono} ${ejercicio.habilidad}</h3>
+        <p>${ejercicio.texto}</p>
+
+        <button
+            class="boton"
+            data-diario="${index}"
+            ${completado ? "disabled" : ""}
+        >
+            ${completado ? "✅ COMPLETADO" : "✔️ COMPLETAR"}
+        </button>
+    `;
+
+    contenedor.appendChild(div);
+});
+
+document.querySelectorAll("[data-diario]").forEach(boton=>{
+
+    boton.addEventListener("click",()=>{
+
+        const index = Number(boton.dataset.diario);
+
+        completarDiario(index,boton);
+    });
+});
+
+actualizarProgresoDiario();
+
+}
+
+function completarDiario(index,boton){
+
+if(datos.diario.completados.includes(index)){
+    return;
+}
+
+datos.diario.completados.push(index);
+
+boton.textContent = "✅ COMPLETADO";
+boton.disabled = true;
+
+boton.parentElement.classList.add("completado");
+
+datos.monedas += 25;
+
+if(datos.diario.completados.length === ejerciciosDiarios.length){
+
+    if(!datos.diario.recompensado){
+
+        datos.xp += 100;
+        datos.monedas += 100;
+
+        datos.diario.recompensado = true;
+        datos.diasCompletados++;
+
+        alert("🔥 ¡ENTRENAMIENTO DIARIO COMPLETADO!\n\n+100 XP\n+100 monedas");
+    }
+}
+
+guardar();
+
+actualizarXP();
+actualizarEstadisticas();
+comprobarLogros();
+crearLogros();
+actualizarProgresoDiario();
+
+}
+
+function actualizarProgresoDiario(){
+
+const completados = datos.diario.completados.length;
+
+const total = ejerciciosDiarios.length;
+
+document.getElementById("progresoDiario").textContent =
+    `${completados}/${total}`;
+
+const porcentaje =
+    (completados / total) * 100;
+
+document.getElementById("barraDiario").style.width =
+    porcentaje + "%";
+
+}
+
+function crearHabilidades(){
+
+const contenedor =
+    document.getElementById("habilidades");
+
+contenedor.innerHTML = "";
+
+habilidades.forEach(habilidad=>{
+
+    const div = document.createElement("div");
+
+    div.className = "habilidad";
+
+    div.innerHTML = `
+        <h3>${iconos[habilidad]} ${habilidad}</h3>
+
+        <div class="opciones">
+
+            <button
+                class="rojo"
+                data-habilidad="${habilidad}"
+                data-puntos="1"
+            >
+                🔴 Necesito mejorar
+            </button>
+
+            <button
+                class="amarillo"
+                data-habilidad="${habilidad}"
+                data-puntos="2"
+            >
+                🟡 Más o menos
+            </button>
+
+            <button
+                class="verde"
+                data-habilidad="${habilidad}"
+                data-puntos="3"
+            >
+                🟢 Estoy bien
+            </button>
+
+        </div>
+    `;
+
+    contenedor.appendChild(div);
+});
+
+document.querySelectorAll("[data-habilidad]").forEach(boton=>{
+
+    boton.addEventListener("click",()=>{
+
+        const habilidad = boton.dataset.habilidad;
+
+        const puntos = Number(boton.dataset.puntos);
+
+        responder(habilidad,puntos,boton);
+    });
+});
+
+}
+
+function responder(habilidad,puntos,boton){
+
+datos.respuestas[habilidad] = puntos;
+
+const padre = boton.parentElement;
+
+padre.querySelectorAll("button").forEach(b=>{
+    b.style.opacity = "0.4";
+});
+
+boton.style.opacity = "1";
+
+guardar();
+
+if(Object.keys(datos.respuestas).length === habilidades.length){
+
+    mostrarResultado();
+}
+
+  }
+  function mostrarResultado(){
+
+let total = 0;
+let debilidades = [];
+let fortalezas = [];
+
+habilidades.forEach(habilidad=>{
+
+    const puntos = datos.respuestas[habilidad] || 0;
+
+    total += puntos;
+
+    if(puntos === 1){
+        debilidades.push(habilidad);
+    }
+
+    if(puntos === 3){
+        fortalezas.push(habilidad);
+    }
+});
+
+let nivel = "";
+
+if(total <= 9){
+    nivel = "🥉 Principiante";
+}else if(total <= 13){
+    nivel = "🥈 En progreso";
+}else if(total <= 16){
+    nivel = "🥇 Avanzado";
+}else{
+    nivel = "🔥 Experto";
+}
+
+const resultado =
+    document.getElementById("resultado");
+
+const contenido =
+    document.getElementById("resultadoContenido");
+
+contenido.innerHTML = `
+    <div class="rango">${nivel}</div>
+
+    <p><strong>Puntuación:</strong> ${total}/18</p>
+
+    <br>
+
+    <p>
+        <strong>🔻 Necesitas mejorar:</strong><br>
+        ${
+            debilidades.length
+            ? debilidades.map(h=>`${iconos[h]} ${h}`).join(" • ")
+            : "¡Ninguna! 🔥"
+        }
+    </p>
+
+    <br>
+
+    <p>
+        <strong>🔺 Tus fortalezas:</strong><br>
+        ${
+            fortalezas.length
+            ? fortalezas.map(h=>`${iconos[h]} ${h}`).join(" • ")
+            : "Todavía puedes mejorar todas 💪"
+        }
+    </p>
+`;
+
+resultado.classList.remove("oculto");
+
+crearEntrenamiento(debilidades);
+
+comprobarLogros();
+crearLogros();
+guardar();
+
+}
+
+function crearEntrenamiento(debilidades){
+
+const card =
+    document.getElementById("entrenamiento");
+
+const lista =
+    document.getElementById("listaEntrenamiento");
+
+lista.innerHTML = "";
+
+if(debilidades.length === 0){
+
+    card.classList.remove("oculto");
+
+    lista.innerHTML = `
+        <div class="ejercicio">
+            <h3>🔥 ¡Nivelazo!</h3>
+            <p>
+                No tienes ninguna habilidad marcada como
+                "Necesito mejorar".
+            </p>
+        </div>
+    `;
+
+    return;
+}
+
+card.classList.remove("oculto");
+
+debilidades.forEach(habilidad=>{
+
+    entrenamientos[habilidad].forEach((texto,index)=>{
+
+        const id =
+            `${habilidad}-${index}`;
+
+        const completado =
+            datos.ejercicios.includes(id);
+
+        const div =
+            document.createElement("div");
+
+        div.className = "ejercicio";
+
+        if(completado){
+            div.classList.add("completado");
+        }
+
+        div.innerHTML = `
+            <h3>${iconos[habilidad]} ${habilidad}</h3>
+
+            <p>${texto}</p>
+
+            <button
+                class="boton"
+                data-ejercicio="${id}"
+                ${completado ? "disabled" : ""}
+            >
+                ${
+                    completado
+                    ? "✅ COMPLETADO"
+                    : "⭐ COMPLETAR +25 XP"
+                }
+            </button>
+        `;
+
+        lista.appendChild(div);
+    });
+});
+
+document.querySelectorAll("[data-ejercicio]").forEach(boton=>{
+
+    boton.addEventListener("click",()=>{
+
+        const id = boton.dataset.ejercicio;
+
+        completarEjercicio(id,boton);
+    });
+});
+
+}
+
+function completarEjercicio(id,boton){
+
+if(datos.ejercicios.includes(id)){
+    return;
+}
+
+datos.ejercicios.push(id);
+
+datos.xp += 25;
+datos.monedas += 10;
+
+boton.textContent = "✅ COMPLETADO";
+boton.disabled = true;
+
+boton.parentElement.classList.add("completado");
+
+guardar();
+
+actualizarXP();
+actualizarEstadisticas();
+
+comprobarLogros();
+crearLogros();
+
+}
+
+function obtenerRango(){
+
+if(datos.nivel < 5){
+    return "🥉 Novato";
+}
+
+if(datos.nivel < 10){
+    return "🥈 Guerrero";
+}
+
+if(datos.nivel < 20){
+    return "🥇 Élite";
+}
+
+if(datos.nivel < 30){
+    return "💎 Maestro";
+}
+
+return "🔥 Leyenda";
+
+}
+
+function actualizarXP(){
+
+datos.nivel =
+    Math.floor(datos.xp / 100) + 1;
+
+const xpActual =
+    datos.xp % 100;
+
+document.getElementById("xp").textContent =
+    xpActual;
+
+document.getElementById("nivel").textContent =
+    datos.nivel;
+
+document.getElementById("xpSiguiente").textContent =
+    100;
+
+document.getElementById("barraXP").style.width =
+    xpActual + "%";
+
+document.getElementById("monedas").textContent =
+    datos.monedas;
+
+document.getElementById("rangoJugador").textContent =
+    obtenerRango();
+
+guardar();
+
+}
+
+function actualizarEstadisticas(){
+
+document.getElementById("estadisticaEjercicios").textContent =
+    datos.ejercicios.length;
+
+document.getElementById("estadisticaDias").textContent =
+    datos.diasCompletados;
+
+document.getElementById("estadisticaXP").textContent =
+    datos.xp;
+
+document.getElementById("estadisticaMonedas").textContent =
+    datos.monedas;
+
+}
+
+function crearRetos(){
+
+const contenedor =
+    document.getElementById("retos");
+
+contenedor.innerHTML = "";
+
+retos.forEach((reto,index)=>{
+
+    const completado =
+        datos.retosCompletados.includes(index);
+
+    const div =
+        document.createElement("div");
+
+    div.className = "reto";
+
+    div.innerHTML = `
+        <h3>${reto.pregunta}</h3>
+
+        <div data-reto="${index}">
+
+            ${reto.opciones.map((opcion,i)=>`
+                <button
+                    class="opcion-reto"
+                    data-opcion="${i}"
+                    ${completado ? "disabled" : ""}
+                >
+                    ${opcion}
+                </button>
+            `).join("")}
+
+        </div>
+
+        <p
+            id="resultadoReto${index}"
+            style="margin-top:10px;"
+        ></p>
+    `;
+
+    contenedor.appendChild(div);
+});
+
+document.querySelectorAll("[data-reto]").forEach(grupo=>{
+
+    const index =
+        Number(grupo.dataset.reto);
+
+    grupo.querySelectorAll("[data-opcion]").forEach(boton=>{
+
+        boton.addEventListener("click",()=>{
+
+            responderReto(
+                index,
+                Number(boton.dataset.opcion),
+                grupo
+            );
+        });
+    });
+});
+
+}
+
+function responderReto(index,opcion,grupo){
+
+if(datos.retosCompletados.includes(index)){
+    return;
+}
+
+const reto = retos[index];
+
+const botones =
+    grupo.querySelectorAll("button");
+
+botones.forEach(b=>{
+    b.disabled = true;
+});
+
+const resultado =
+    document.getElementById(`resultadoReto${index}`);
+
+if(opcion === reto.correcta){
+
+    datos.xp += 50;
+    datos.monedas += 30;
+
+    datos.retosCompletados.push(index);
+
+    botones[opcion].classList.add("correcto");
+
+    resultado.textContent =
+        "🔥 ¡Correcto! +50 XP y +30 monedas";
+}else{
+
+    botones[opcion].classList.add("incorrecto");
+
+    resultado.textContent =
+        "❌ No era la mejor opción. ¡Sigue entrenando!";
+}
+
+guardar();
+
+actualizarXP();
+actualizarEstadisticas();
+
+comprobarLogros();
+crearLogros();
+
+}
+
+function comprobarLogros(){
+
+if(datos.ejercicios.length >= 1){
+    datos.logros.primerEjercicio = true;
+}
+
+if(datos.xp >= 500){
+    datos.logros.xp500 = true;
+}
+
+if(datos.monedas >= 500){
+    datos.logros.monedas500 = true;
+}
+
+if(datos.diasCompletados >= 5){
+    datos.logros.cincoDiarios = true;
+}
+
+if(datos.respuestas["Rush"] === 3){
+    datos.logros.rush = true;
+}
+
+if(datos.respuestas["Puntería"] === 3){
+    datos.logros.punteria = true;
+}
+
+guardar();
+
+}
+
+function crearLogros(){
+
+const contenedor =
+    document.getElementById("logros");
+
+contenedor.innerHTML = "";
+
+logrosBase.forEach(logro=>{
+
+    const desbloqueado =
+        datos.logros[logro.id] === true;
+
+    const div =
+        document.createElement("div");
+
+    div.className = "logro";
+
+    if(!desbloqueado){
+        div.classList.add("logro-bloqueado");
+    }
+
+    div.innerHTML = `
+        <strong>
+            ${desbloqueado ? "🏆" : "🔒"}
+            ${logro.nombre}
+        </strong>
+
+        <p style="margin-top:5px;">
+            ${logro.descripcion}
+        </p>
+    `;
+
+    contenedor.appendChild(div);
+});
+
+}
+
+function reiniciarTodo(){
+
+const confirmar =
+    confirm(
+        "¿Seguro que quieres borrar TODO tu progreso?"
+    );
+
+if(!confirmar){
+    return;
+}
+
+localStorage.removeItem("freeFireTraining2");
+
+location.reload();
+
+}
+
+document
+.getElementById("botonComenzar")
+.addEventListener("click",crearPerfil);
+
+document
+.getElementById("botonReiniciar")
+.addEventListener("click",reiniciarTodo);
+
+cargar();
+
+</script></body>
+</html>
